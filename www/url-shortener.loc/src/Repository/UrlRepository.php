@@ -28,4 +28,13 @@ class UrlRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    public function findUrlsCreatedAfter(\DateTimeImmutable $lastSentTime)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.createdDate > :lastSentTime')
+            ->setParameter('lastSentTime', $lastSentTime)
+            ->getQuery()
+            ->getResult();
+    }
 }
